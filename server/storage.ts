@@ -13,6 +13,8 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   getAllUsers(): Promise<User[]>;
+  updateUserStripeInfo(userId: number, stripeCustomerId: string, stripeSubscriptionId: string, subscriptionStatus: string, subscriptionPlan: string): Promise<User>;
+  updateUserSubscriptionStatus(userId: number, subscriptionStatus: string): Promise<User>;
   
   createKpiReport(userId: number, report: InsertKpiReport): Promise<KpiReport>;
   getKpiReports(userId?: number, fromDate?: string, toDate?: string): Promise<KpiReportWithCalculated[]>;
@@ -57,6 +59,29 @@ export class DatabaseStorage implements IStorage {
 
   async getAllUsers(): Promise<User[]> {
     return await db.select().from(users).where(eq(users.role, 'user')).orderBy(asc(users.name));
+  }
+
+  async updateUserStripeInfo(userId: number, stripeCustomerId: string, stripeSubscriptionId: string, subscriptionStatus: string, subscriptionPlan: string): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({
+        stripeCustomerId,
+        stripeSubscriptionId,
+        subscriptionStatus,
+        subscriptionPlan,
+      })
+      .where(eq(users.id, userId))
+      .returning();
+    return user;
+  }
+
+  async updateUserSubscriptionStatus(userId: number, subscriptionStatus: string): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ subscriptionStatus })
+      .where(eq(users.id, userId))
+      .returning();
+    return user;
   }
 
   async createKpiReport(userId: number, report: InsertKpiReport): Promise<KpiReport> {

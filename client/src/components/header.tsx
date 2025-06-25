@@ -68,6 +68,15 @@ export function Header({ selectedUserId, onUserChange }: HeaderProps) {
               </Link>
             )}
           </nav>
+          
+          {/* Subscription status for non-admin users */}
+          {user?.role !== 'admin' && user?.subscriptionStatus !== 'active' && (
+            <Link href="/subscribe">
+              <Button variant="outline" size="sm" className="ml-4">
+                Upgrade to Pro
+              </Button>
+            </Link>
+          )}
         </div>
 
         <div className="flex items-center space-x-4">

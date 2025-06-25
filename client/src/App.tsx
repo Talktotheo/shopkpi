@@ -8,6 +8,7 @@ import { ProtectedRoute } from "./lib/protected-route";
 import DashboardPage from "@/pages/dashboard-page";
 import SubmitKpiPage from "@/pages/submit-kpi-page";
 import ReportsPage from "@/pages/reports-page";
+import SubscribePage from "@/pages/subscribe-page";
 import AuthPage from "@/pages/auth-page";
 import NotFound from "@/pages/not-found";
 
@@ -17,6 +18,7 @@ function Router() {
       <ProtectedRoute path="/" component={DashboardPage} />
       <ProtectedRoute path="/submit" component={SubmitKpiPage} />
       <ProtectedRoute path="/reports" component={ReportsPage} />
+      <ProtectedRoute path="/subscribe" component={SubscribePage} />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />
     </Switch>
