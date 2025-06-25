@@ -1,0 +1,77 @@
+Design Brief (Neutral Tech Stack)
+App Name (working title): ShopPrint KPIs
+Audience: Screen-printing shop owners and their employees
+Core Goal: Capture daily production KPIs → deliver instant visual insight for owners/managers
+________________________________________
+1. High-Level Requirements
+Area	Requirement
+Data capture	Employees submit six core KPIs once per shift/day via a mobile-friendly form.
+Visualization	Dashboard shows each KPI as a “stat card” and renders line-charts for any combination of metrics over time (single user or cross-user).
+Auth	Secure username + password with role-based access: Admin and User.
+Multi-user admin view	Admin can select any employee (dropdown) or “All users” to aggregate.
+Calculated metrics	Display derived stats such as Prints / Hour, Defect Rate (%), Jobs / Hour, Screens / Job.
+Security & audit	All endpoints protected; submissions timestamped and immutable (editable only by Admin).
+________________________________________
+2. Screens & UX (use shadcn/ui components)
+Screen	Key UI Elements	Interactions
+Auth	Input, Button, Card components for email & password; “Forgot password?” link	Standard login → JWT (or session) issued on success
+KPI Report Submission	DatePicker (defaults to “Today”) + six Input fields inside a Form; Button for Submit; validation feedback	POST → /api/reports (or equivalent endpoint)
+KPI Dashboard	• Select dropdown (Admin only): “👤 All users / ”• Date-range picker• Six KPI Cards (today, yesterday Δ, trailing-7-day avg)• Calculated-metric cards• Metric ToggleGroup chips above chart• Responsive line chart (any charting lib) reflecting chip selection	Selecting a new user or date range re-queries data; toggling chips adds/removes series in the chart
+________________________________________
+3. Data Model (conceptual)
+Field	Type	Notes
+users	id, name, email, password_hash, role (admin / user)	
+kpi_reports	id, user_id, report_date, prints_completed, jobs_completed, misprints, order_accuracy (%), screens_used, hours_worked, created_at	Unique (user_id, report_date)
+Derived (read-only) values:
+•	prints_per_hour = prints_completed / hours_worked
+•	jobs_per_hour = jobs_completed / hours_worked
+•	defect_rate_pct = misprints / prints_completed × 100
+•	screens_per_job = screens_used / jobs_completed
+________________________________________
+4. API (example shape)
+Method	Endpoint	Purpose	Auth
+POST	/login	Sign in, return token/session	—
+GET	/me	Current user profile	Any
+POST	/users	Create employee	Admin
+GET	/users	List employees	Admin
+POST	/reports	Submit KPI report	User
+GET	/reports?userId=&from=&to=	Fetch reports (Admins can pass userId; users get self)	Role-based
+Responses JSON; errors standardized.
+________________________________________
+5. Technology Guidance
+Choose whatever backend, database, hosting, and charting library best fits your stack.
+UI must use shadcn/ui components (Tailwind CSS-based). Beyond that, the design is intentionally agnostic:
+•	Any language/framework for server (e.g., TypeScript, Python, Go, etc.)
+•	Any relational or document DB that supports date queries and aggregates
+•	Auth may be handled via JWT, session cookies, or a managed identity service
+________________________________________
+6. Validation & Edge Cases
+1.	Duplicate submissions blocked by unique (user, date).
+2.	Division-by-zero guarded in derived metrics.
+3.	Store report_date as local shop date plus UTC timestamp.
+4.	Inputs validated as non-negative; enforce reasonable upper bounds (e.g., prints ≤ 10 000).
+5.	Responsive layout for phone/tablet usage on the production floor.
+________________________________________
+7. Acceptance Criteria
+•	Employees can log in and submit KPI form with client-side + server validation.
+•	Users see their own dashboard; Admin can view any employee or aggregated “All users.”
+•	Stat cards and calculated metrics update with correct deltas and trailing averages.
+•	Line chart updates live when metrics or date range change.
+•	All sensitive routes protected; unauthorized access returns 401/403.
+•	Automated tests cover auth, data submission, and metric calculations.
+________________________________________
+8. Suggested Milestones (time estimates depend on chosen stack)
+1.	Auth & role setup
+2.	KPI form + persistence
+3.	Basic dashboard (self-view)
+4.	Admin dropdown & aggregation
+5.	Calculated metrics, charts, responsive polish
+6.	Testing, CI, deployment docs
+________________________________________
+Hand-off Notes to AI Coding Assistant
+•	Build UI exclusively with shadcn/ui components; adhere to Tailwind utility classes where needed.
+•	Keep all field and route names as specified to simplify integration.
+•	Provide seed script for an Admin, two Users, and two weeks of sample data.
+•	Document environment variables for secrets, DB connections, etc.
+•	Ship a Docker (or analogous) setup for easy local spin-up.
+End of brief.
