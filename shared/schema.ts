@@ -20,7 +20,6 @@ export const kpiReports = pgTable("kpi_reports", {
   printsCompleted: integer("prints_completed").notNull(),
   jobsCompleted: integer("jobs_completed").notNull(),
   misprints: integer("misprints").notNull(),
-  orderAccuracy: real("order_accuracy").notNull(), // percentage as decimal
   screensUsed: integer("screens_used").notNull(),
   hoursWorked: real("hours_worked").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -59,7 +58,6 @@ export const insertKpiReportSchema = createInsertSchema(kpiReports).omit({
   printsCompleted: z.number().min(0).max(10000),
   jobsCompleted: z.number().min(0).max(1000),
   misprints: z.number().min(0).max(1000),
-  orderAccuracy: z.number().min(0).max(100),
   screensUsed: z.number().min(0).max(1000),
   hoursWorked: z.number().min(0).max(24),
 });
@@ -72,10 +70,12 @@ export type InsertKpiReport = z.infer<typeof insertKpiReportSchema>;
 
 // Extended types for API responses with calculated metrics
 export type KpiReportWithCalculated = KpiReport & {
+  userName?: string;
   printsPerHour: number;
   jobsPerHour: number;
   defectRate: number;
   screensPerJob: number;
+  orderAccuracy: number;
 };
 
 export type DashboardStats = {

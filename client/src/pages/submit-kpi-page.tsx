@@ -28,7 +28,6 @@ export default function SubmitKpiPage() {
       printsCompleted: 0,
       jobsCompleted: 0,
       misprints: 0,
-      orderAccuracy: 0,
       screensUsed: 0,
       hoursWorked: 0,
     },
@@ -46,7 +45,6 @@ export default function SubmitKpiPage() {
         printsCompleted: 0,
         jobsCompleted: 0,
         misprints: 0,
-        orderAccuracy: 0,
         screensUsed: 0,
         hoursWorked: 0,
       });
@@ -76,7 +74,6 @@ export default function SubmitKpiPage() {
       printsCompleted: 0,
       jobsCompleted: 0,
       misprints: 0,
-      orderAccuracy: 0,
       screensUsed: 0,
       hoursWorked: 0,
     });
@@ -180,30 +177,6 @@ export default function SubmitKpiPage() {
                             placeholder="e.g., 28"
                             {...field}
                             onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="orderAccuracy"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Order Accuracy (%) <span className="text-red-500">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            min="0"
-                            max="100"
-                            step="0.1"
-                            placeholder="e.g., 97.8"
-                            {...field}
-                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                           />
                         </FormControl>
                         <FormMessage />
