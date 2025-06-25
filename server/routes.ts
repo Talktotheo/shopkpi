@@ -30,9 +30,14 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  // Submit KPI report
+  // Submit KPI report - require subscription for non-admin users
   app.post("/api/reports", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    // Check subscription status for non-admin users
+    if (req.user?.role !== 'admin' && req.user?.subscriptionStatus !== 'active') {
+      return res.status(403).json({ message: "Active subscription required" });
+    }
 
     try {
       const validatedData = insertKpiReportSchema.parse(req.body);
@@ -78,9 +83,14 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
-  // Get dashboard data
+  // Get dashboard data - require subscription for non-admin users
   app.get("/api/dashboard", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
+    
+    // Check subscription status for non-admin users
+    if (req.user?.role !== 'admin' && req.user?.subscriptionStatus !== 'active') {
+      return res.status(403).json({ message: "Active subscription required" });
+    }
 
     try {
       const { userId, from, to } = req.query;

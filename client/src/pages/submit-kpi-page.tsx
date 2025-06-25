@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertKpiReportSchema, InsertKpiReport } from "@shared/schema";
 import { Header } from "@/components/header";
+import { SubscriptionGuard } from "@/lib/subscription-guard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -97,10 +98,11 @@ export default function SubmitKpiPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header selectedUserId="" onUserChange={() => {}} />
-      
-      <div className="max-w-4xl mx-auto p-4">
+    <SubscriptionGuard>
+      <div className="min-h-screen bg-gray-50">
+        <Header selectedUserId="" onUserChange={() => {}} />
+        
+        <div className="max-w-4xl mx-auto p-4">
         <Card>
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-gray-900">
@@ -312,7 +314,8 @@ export default function SubmitKpiPage() {
             </Form>
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+    </SubscriptionGuard>
   );
 }

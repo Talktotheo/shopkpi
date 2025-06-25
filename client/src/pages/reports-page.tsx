@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { Header } from "@/components/header";
+import { SubscriptionGuard } from "@/lib/subscription-guard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -116,10 +117,11 @@ export default function ReportsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header selectedUserId={selectedUserId} onUserChange={setSelectedUserId} />
-      
-      <div className="max-w-7xl mx-auto p-4">
+    <SubscriptionGuard>
+      <div className="min-h-screen bg-gray-50">
+        <Header selectedUserId={selectedUserId} onUserChange={setSelectedUserId} />
+        
+        <div className="max-w-7xl mx-auto p-4">
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -273,7 +275,8 @@ export default function ReportsPage() {
             )}
           </CardContent>
         </Card>
+        </div>
       </div>
-    </div>
+    </SubscriptionGuard>
   );
 }
