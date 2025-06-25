@@ -68,15 +68,9 @@ export function KpiStatsCards({ data }: KpiStatsCardsProps) {
       />
       
       <StatCard
-        title="Jobs Completed"
-        stats={data.jobsCompleted}
+        title="Misprints"
+        stats={data.misprints}
         format={(v) => Math.round(v).toLocaleString()}
-      />
-      
-      <StatCard
-        title="Hours Worked"
-        stats={data.hoursWorked}
-        format={(v) => v.toFixed(1)}
       />
       
       <StatCard
@@ -86,15 +80,15 @@ export function KpiStatsCards({ data }: KpiStatsCardsProps) {
       />
       
       <StatCard
-        title="Misprints"
-        stats={data.misprints}
+        title="Screens Used"
+        stats={data.screensUsed}
         format={(v) => Math.round(v).toLocaleString()}
       />
       
       <StatCard
-        title="Screens Used"
-        stats={data.screensUsed}
-        format={(v) => Math.round(v).toLocaleString()}
+        title="Time on Job"
+        stats={data.timeOnJob}
+        format={(v) => `${v.toFixed(1)}h`}
       />
     </div>
   );

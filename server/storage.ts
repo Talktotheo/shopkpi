@@ -106,10 +106,9 @@ export class DatabaseStorage implements IStorage {
       return {
         ...kpiData,
         userName: userData?.name || '',
-        printsPerHour: kpiData.hoursWorked > 0 ? kpiData.printsCompleted / kpiData.hoursWorked : 0,
-        jobsPerHour: kpiData.hoursWorked > 0 ? kpiData.jobsCompleted / kpiData.hoursWorked : 0,
+        printsPerHour: kpiData.timeOnJob > 0 ? kpiData.printsCompleted / kpiData.timeOnJob : 0,
         defectRate: kpiData.printsCompleted > 0 ? (kpiData.misprints / kpiData.printsCompleted) * 100 : 0,
-        screensPerJob: kpiData.jobsCompleted > 0 ? kpiData.screensUsed / kpiData.jobsCompleted : 0,
+        screensPerJob: kpiData.printsCompleted > 0 ? kpiData.screensUsed / kpiData.printsCompleted : 0,
         orderAccuracy: kpiData.printsCompleted > 0 ? ((kpiData.printsCompleted - kpiData.misprints) / kpiData.printsCompleted) * 100 : 0,
       };
     });
@@ -130,10 +129,9 @@ export class DatabaseStorage implements IStorage {
     const todayData = await db
       .select({
         printsCompleted: sql<number>`COALESCE(SUM(${kpiReports.printsCompleted}), 0)`,
-        jobsCompleted: sql<number>`COALESCE(SUM(${kpiReports.jobsCompleted}), 0)`,
         misprints: sql<number>`COALESCE(SUM(${kpiReports.misprints}), 0)`,
         screensUsed: sql<number>`COALESCE(SUM(${kpiReports.screensUsed}), 0)`,
-        hoursWorked: sql<number>`COALESCE(SUM(${kpiReports.hoursWorked}), 0)`,
+        timeOnJob: sql<number>`COALESCE(SUM(${kpiReports.timeOnJob}), 0)`,
       })
       .from(kpiReports)
       .where(todayConditions.length > 0 ? and(...todayConditions) : undefined);
@@ -143,10 +141,9 @@ export class DatabaseStorage implements IStorage {
     const yesterdayData = await db
       .select({
         printsCompleted: sql<number>`COALESCE(SUM(${kpiReports.printsCompleted}), 0)`,
-        jobsCompleted: sql<number>`COALESCE(SUM(${kpiReports.jobsCompleted}), 0)`,
         misprints: sql<number>`COALESCE(SUM(${kpiReports.misprints}), 0)`,
         screensUsed: sql<number>`COALESCE(SUM(${kpiReports.screensUsed}), 0)`,
-        hoursWorked: sql<number>`COALESCE(SUM(${kpiReports.hoursWorked}), 0)`,
+        timeOnJob: sql<number>`COALESCE(SUM(${kpiReports.timeOnJob}), 0)`,
       })
       .from(kpiReports)
       .where(yesterdayConditions.length > 0 ? and(...yesterdayConditions) : undefined);
@@ -156,17 +153,16 @@ export class DatabaseStorage implements IStorage {
     const weekData = await db
       .select({
         printsCompleted: sql<number>`COALESCE(AVG(${kpiReports.printsCompleted}), 0)`,
-        jobsCompleted: sql<number>`COALESCE(AVG(${kpiReports.jobsCompleted}), 0)`,
         misprints: sql<number>`COALESCE(AVG(${kpiReports.misprints}), 0)`,
         screensUsed: sql<number>`COALESCE(AVG(${kpiReports.screensUsed}), 0)`,
-        hoursWorked: sql<number>`COALESCE(AVG(${kpiReports.hoursWorked}), 0)`,
+        timeOnJob: sql<number>`COALESCE(AVG(${kpiReports.timeOnJob}), 0)`,
       })
       .from(kpiReports)
       .where(weekConditions.length > 0 ? and(...weekConditions) : undefined);
 
-    const todayStats = todayData[0] || { printsCompleted: 0, jobsCompleted: 0, misprints: 0, screensUsed: 0, hoursWorked: 0 };
-    const yesterdayStats = yesterdayData[0] || { printsCompleted: 0, jobsCompleted: 0, misprints: 0, screensUsed: 0, hoursWorked: 0 };
-    const weekStats = weekData[0] || { printsCompleted: 0, jobsCompleted: 0, misprints: 0, screensUsed: 0, hoursWorked: 0 };
+    const todayStats = todayData[0] || { printsCompleted: 0, misprints: 0, screensUsed: 0, timeOnJob: 0 };
+    const yesterdayStats = yesterdayData[0] || { printsCompleted: 0, misprints: 0, screensUsed: 0, timeOnJob: 0 };
+    const weekStats = weekData[0] || { printsCompleted: 0, misprints: 0, screensUsed: 0, timeOnJob: 0 };
 
     const calculateChange = (today: number, yesterday: number): number => {
       if (yesterday === 0) return today > 0 ? 100 : 0;
@@ -191,16 +187,14 @@ export class DatabaseStorage implements IStorage {
 
     return {
       printsCompleted: createStats(todayStats.printsCompleted, yesterdayStats.printsCompleted, weekStats.printsCompleted),
-      jobsCompleted: createStats(todayStats.jobsCompleted, yesterdayStats.jobsCompleted, weekStats.jobsCompleted),
       misprints: createStats(todayStats.misprints, yesterdayStats.misprints, weekStats.misprints),
       orderAccuracy: createStats(todayOrderAccuracy, yesterdayOrderAccuracy, weekOrderAccuracy),
       screensUsed: createStats(todayStats.screensUsed, yesterdayStats.screensUsed, weekStats.screensUsed),
-      hoursWorked: createStats(todayStats.hoursWorked, yesterdayStats.hoursWorked, weekStats.hoursWorked),
+      timeOnJob: createStats(todayStats.timeOnJob, yesterdayStats.timeOnJob, weekStats.timeOnJob),
       calculatedMetrics: {
-        printsPerHour: todayStats.hoursWorked > 0 ? todayStats.printsCompleted / todayStats.hoursWorked : 0,
-        jobsPerHour: todayStats.hoursWorked > 0 ? todayStats.jobsCompleted / todayStats.hoursWorked : 0,
+        printsPerHour: todayStats.timeOnJob > 0 ? todayStats.printsCompleted / todayStats.timeOnJob : 0,
         defectRate: todayStats.printsCompleted > 0 ? (todayStats.misprints / todayStats.printsCompleted) * 100 : 0,
-        screensPerJob: todayStats.jobsCompleted > 0 ? todayStats.screensUsed / todayStats.jobsCompleted : 0,
+        screensPerJob: todayStats.printsCompleted > 0 ? todayStats.screensUsed / todayStats.printsCompleted : 0,
       },
     };
   }

@@ -99,8 +99,14 @@ The application is configured for deployment on Replit with the following setup:
 - **Ports**: Application runs on port 5000, exposed as port 80
 - **Autoscale**: Configured for automatic scaling deployment
 
-## Changelog
-- June 25, 2025. Initial setup
+## Recent Changes
+- June 25, 2025: Updated KPI tracking system to job-based reporting
+  - Removed "Jobs Completed" metric
+  - Added job name and job number fields to track individual jobs
+  - Changed "Hours Worked" to "Time on Job" with 15-minute increment dropdown
+  - Updated dashboard to show job-level details in admin view
+  - Order accuracy now automatically calculated from prints and misprints
+  - Admin can view all completed jobs by day and user in jobs table
 
 ## User Preferences
 

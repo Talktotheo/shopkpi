@@ -17,11 +17,12 @@ export const kpiReports = pgTable("kpi_reports", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
   reportDate: date("report_date").notNull(),
+  jobName: varchar("job_name", { length: 255 }).notNull(),
+  jobNumber: varchar("job_number", { length: 100 }).notNull(),
   printsCompleted: integer("prints_completed").notNull(),
-  jobsCompleted: integer("jobs_completed").notNull(),
   misprints: integer("misprints").notNull(),
   screensUsed: integer("screens_used").notNull(),
-  hoursWorked: real("hours_worked").notNull(),
+  timeOnJob: real("time_on_job").notNull(), // in hours (0.25 = 15 minutes)
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -55,11 +56,12 @@ export const insertKpiReportSchema = createInsertSchema(kpiReports).omit({
   createdAt: true,
 }).extend({
   reportDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  jobName: z.string().min(1, "Job name is required").max(255),
+  jobNumber: z.string().min(1, "Job number is required").max(100),
   printsCompleted: z.number().min(0).max(10000),
-  jobsCompleted: z.number().min(0).max(1000),
   misprints: z.number().min(0).max(1000),
   screensUsed: z.number().min(0).max(1000),
-  hoursWorked: z.number().min(0).max(24),
+  timeOnJob: z.number().min(0.25).max(24), // minimum 15 minutes (0.25 hours)
 });
 
 export type User = typeof users.$inferSelect;
@@ -72,7 +74,6 @@ export type InsertKpiReport = z.infer<typeof insertKpiReportSchema>;
 export type KpiReportWithCalculated = KpiReport & {
   userName?: string;
   printsPerHour: number;
-  jobsPerHour: number;
   defectRate: number;
   screensPerJob: number;
   orderAccuracy: number;
@@ -87,14 +88,12 @@ export type DashboardStats = {
 
 export type DashboardData = {
   printsCompleted: DashboardStats;
-  jobsCompleted: DashboardStats;
   misprints: DashboardStats;
   orderAccuracy: DashboardStats;
   screensUsed: DashboardStats;
-  hoursWorked: DashboardStats;
+  timeOnJob: DashboardStats;
   calculatedMetrics: {
     printsPerHour: number;
-    jobsPerHour: number;
     defectRate: number;
     screensPerJob: number;
   };

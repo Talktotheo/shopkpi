@@ -5,6 +5,7 @@ import { Header } from "@/components/header";
 import { KpiStatsCards } from "@/components/kpi-stats-cards";
 import { CalculatedMetrics } from "@/components/calculated-metrics";
 import { MetricsChart } from "@/components/metrics-chart";
+import { JobsTable } from "@/components/jobs-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

@@ -4,7 +4,6 @@ import { Gauge, Clock, AlertTriangle, Layers } from "lucide-react";
 interface CalculatedMetricsProps {
   data: {
     printsPerHour: number;
-    jobsPerHour: number;
     defectRate: number;
     screensPerJob: number;
   };
@@ -12,7 +11,7 @@ interface CalculatedMetricsProps {
 
 export function CalculatedMetrics({ data }: CalculatedMetricsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <Card className="bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200">
         <CardContent className="pt-6">
           <div className="flex items-center justify-between">
@@ -27,19 +26,7 @@ export function CalculatedMetrics({ data }: CalculatedMetricsProps) {
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-r from-green-50 to-green-100 border-green-200">
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-green-700">Jobs / Hour</p>
-              <p className="text-xl font-bold text-green-900">
-                {data.jobsPerHour.toFixed(1)}
-              </p>
-            </div>
-            <Clock className="h-6 w-6 text-green-500" />
-          </div>
-        </CardContent>
-      </Card>
+
 
       <Card className="bg-gradient-to-r from-red-50 to-red-100 border-red-200">
         <CardContent className="pt-6">
@@ -59,7 +46,7 @@ export function CalculatedMetrics({ data }: CalculatedMetricsProps) {
         <CardContent className="pt-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-purple-700">Screens / Job</p>
+              <p className="text-sm font-medium text-purple-700">Screens / Print</p>
               <p className="text-xl font-bold text-purple-900">
                 {data.screensPerJob.toFixed(1)}
               </p>

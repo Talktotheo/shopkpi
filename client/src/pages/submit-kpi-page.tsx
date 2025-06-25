@@ -8,28 +8,45 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { CheckCircle, AlertCircle, Loader2, Trash2 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 
 type KpiFormData = InsertKpiReport;
 
+// Generate time options in 15-minute increments from 15 minutes to 24 hours
+const generateTimeOptions = () => {
+  const options = [];
+  for (let hours = 0; hours < 24; hours++) {
+    for (let minutes = 0; minutes < 60; minutes += 15) {
+      if (hours === 0 && minutes === 0) continue; // Skip 0 minutes
+      const totalHours = hours + minutes / 60;
+      const label = `${hours}h ${minutes.toString().padStart(2, '0')}m`;
+      options.push({ value: totalHours, label });
+    }
+  }
+  return options;
+};
+
 export default function SubmitKpiPage() {
   const [showSuccess, setShowSuccess] = useState(false);
   const queryClient = useQueryClient();
   const { toast } = useToast();
+  const timeOptions = generateTimeOptions();
 
   const form = useForm<KpiFormData>({
     resolver: zodResolver(insertKpiReportSchema),
     defaultValues: {
       reportDate: format(new Date(), 'yyyy-MM-dd'),
+      jobName: "",
+      jobNumber: "",
       printsCompleted: 0,
-      jobsCompleted: 0,
       misprints: 0,
       screensUsed: 0,
-      hoursWorked: 0,
+      timeOnJob: 0.25, // 15 minutes minimum
     },
   });
 
@@ -42,18 +59,17 @@ export default function SubmitKpiPage() {
       setShowSuccess(true);
       form.reset({
         reportDate: format(new Date(), 'yyyy-MM-dd'),
+        jobName: "",
+        jobNumber: "",
         printsCompleted: 0,
-        jobsCompleted: 0,
         misprints: 0,
         screensUsed: 0,
-        hoursWorked: 0,
+        timeOnJob: 0.25,
       });
       queryClient.invalidateQueries({ queryKey: ["/api/reports"] });
       queryClient.invalidateQueries({ queryKey: ["/api/dashboard"] });
       
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
+      setTimeout(() => setShowSuccess(false), 5000);
     },
     onError: (error: Error) => {
       toast({
@@ -71,11 +87,12 @@ export default function SubmitKpiPage() {
   const clearForm = () => {
     form.reset({
       reportDate: format(new Date(), 'yyyy-MM-dd'),
+      jobName: "",
+      jobNumber: "",
       printsCompleted: 0,
-      jobsCompleted: 0,
       misprints: 0,
       screensUsed: 0,
-      hoursWorked: 0,
+      timeOnJob: 0.25,
     });
   };
 
@@ -83,7 +100,7 @@ export default function SubmitKpiPage() {
     <div className="min-h-screen bg-gray-50">
       <Header selectedUserId="" onUserChange={() => {}} />
       
-      <div className="max-w-2xl mx-auto p-4">
+      <div className="max-w-4xl mx-auto p-4">
         <Card>
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-gray-900">
@@ -94,24 +111,73 @@ export default function SubmitKpiPage() {
             </p>
           </CardHeader>
           <CardContent>
+            {showSuccess && (
+              <Alert className="mb-6 border-green-200 bg-green-50">
+                <CheckCircle className="h-4 w-4 text-green-600" />
+                <AlertDescription className="text-green-800">
+                  KPI report submitted successfully!
+                </AlertDescription>
+              </Alert>
+            )}
+
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                {/* Date Picker */}
-                <FormField
-                  control={form.control}
-                  name="reportDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        Report Date <span className="text-red-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input type="date" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {/* Top row - Job Info */}
+                <div className="grid md:grid-cols-3 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="jobName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Job Name <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="e.g., Company Logo Shirts"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="jobNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Job Number <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="e.g., JOB-2025-001"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="reportDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          Report Date <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input type="date" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 {/* Core KPI Fields */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -128,30 +194,7 @@ export default function SubmitKpiPage() {
                             type="number"
                             min="0"
                             max="10000"
-                            placeholder="e.g., 1247"
-                            {...field}
-                            onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="jobsCompleted"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>
-                          Jobs Completed <span className="text-red-500">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            min="0"
-                            max="1000"
-                            placeholder="e.g., 43"
+                            placeholder="e.g., 150"
                             {...field}
                             onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
                           />
@@ -174,7 +217,7 @@ export default function SubmitKpiPage() {
                             type="number"
                             min="0"
                             max="1000"
-                            placeholder="e.g., 28"
+                            placeholder="e.g., 3"
                             {...field}
                             onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
                           />
@@ -197,7 +240,7 @@ export default function SubmitKpiPage() {
                             type="number"
                             min="0"
                             max="1000"
-                            placeholder="e.g., 156"
+                            placeholder="e.g., 8"
                             {...field}
                             onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
                           />
@@ -209,42 +252,41 @@ export default function SubmitKpiPage() {
 
                   <FormField
                     control={form.control}
-                    name="hoursWorked"
+                    name="timeOnJob"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          Hours Worked <span className="text-red-500">*</span>
+                          Time on Job <span className="text-red-500">*</span>
                         </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            min="0"
-                            max="24"
-                            step="0.5"
-                            placeholder="e.g., 8.5"
-                            {...field}
-                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
-                          />
-                        </FormControl>
+                        <Select 
+                          value={field.value.toString()} 
+                          onValueChange={(value) => field.onChange(parseFloat(value))}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select time duration" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {timeOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value.toString()}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
 
-                {/* Submit Buttons */}
-                <div className="flex justify-end space-x-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={clearForm}
+                {/* Action Buttons */}
+                <div className="flex gap-3 pt-4">
+                  <Button 
+                    type="submit" 
                     disabled={submitMutation.isPending}
-                  >
-                    Clear
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={submitMutation.isPending}
+                    className="flex-1"
                   >
                     {submitMutation.isPending ? (
                       <>
@@ -252,38 +294,24 @@ export default function SubmitKpiPage() {
                         Submitting...
                       </>
                     ) : (
-                      "Submit KPIs"
+                      'Submit KPI Report'
                     )}
+                  </Button>
+                  
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={clearForm}
+                    disabled={submitMutation.isPending}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Clear
                   </Button>
                 </div>
               </form>
             </Form>
           </CardContent>
         </Card>
-
-        {/* Success Message */}
-        {showSuccess && (
-          <Alert className="mt-4 border-green-200 bg-green-50">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800">
-              <strong>KPIs submitted successfully!</strong> Your production metrics have been recorded.
-            </AlertDescription>
-          </Alert>
-        )}
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex justify-around">
-          <div className="flex flex-col items-center py-2 px-3 text-gray-600">
-            <i className="fas fa-chart-line text-lg"></i>
-            <span className="text-xs mt-1">Dashboard</span>
-          </div>
-          <div className="flex flex-col items-center py-2 px-3 text-primary">
-            <i className="fas fa-plus-circle text-lg"></i>
-            <span className="text-xs mt-1">Submit</span>
-          </div>
-        </div>
       </div>
     </div>
   );
