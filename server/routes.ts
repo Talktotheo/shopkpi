@@ -29,18 +29,7 @@ export function registerRoutes(app: Express): Server {
     try {
       const validatedData = insertKpiReportSchema.parse(req.body);
       
-      // Check for duplicate submission
-      const existingReport = await storage.getKpiReportByUserAndDate(
-        req.user!.id,
-        validatedData.reportDate
-      );
-      
-      if (existingReport) {
-        return res.status(400).json({ 
-          message: "Report for this date already exists. Only one report per day is allowed." 
-        });
-      }
-
+      // With job-based tracking, users can submit multiple reports per day
       const report = await storage.createKpiReport(req.user!.id, validatedData);
       res.status(201).json(report);
     } catch (error) {
