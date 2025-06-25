@@ -62,7 +62,7 @@ export function Header({ selectedUserId, onUserChange }: HeaderProps) {
                 <SelectValue placeholder="👥 All Users" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">👥 All Users</SelectItem>
+                <SelectItem value="all">👥 All Users</SelectItem>
                 {users.map((u) => (
                   <SelectItem key={u.id} value={u.id.toString()}>
                     {u.name}

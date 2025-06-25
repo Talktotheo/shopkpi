@@ -7,7 +7,7 @@ import { KpiReportWithCalculated } from "@shared/schema";
 import { format, parseISO } from "date-fns";
 
 interface MetricsChartProps {
-  userId?: number;
+  userId?: string;
   dateFrom: string;
   dateTo: string;
 }
@@ -28,7 +28,7 @@ export function MetricsChart({ userId, dateFrom, dateTo }: MetricsChartProps) {
     queryKey: ["/api/reports", userId, dateFrom, dateTo],
     queryFn: async () => {
       const params = new URLSearchParams();
-      if (userId) params.append("userId", userId.toString());
+      if (userId && userId !== "all") params.append("userId", userId);
       if (dateFrom) params.append("from", dateFrom);
       if (dateTo) params.append("to", dateTo);
       

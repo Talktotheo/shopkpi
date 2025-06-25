@@ -15,7 +15,7 @@ import { format } from "date-fns";
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [selectedUserId, setSelectedUserId] = useState<string>("all");
   const [dateFrom, setDateFrom] = useState(() => {
     const date = new Date();
     date.setDate(date.getDate() - 7);
@@ -27,7 +27,7 @@ export default function DashboardPage() {
     queryKey: ["/api/dashboard", selectedUserId, dateFrom, dateTo],
     queryFn: async () => {
       const params = new URLSearchParams();
-      if (selectedUserId) params.append("userId", selectedUserId);
+      if (selectedUserId && selectedUserId !== "all") params.append("userId", selectedUserId);
       if (dateFrom) params.append("from", dateFrom);
       if (dateTo) params.append("to", dateTo);
       
@@ -113,7 +113,7 @@ export default function DashboardPage() {
 
         {/* Charts */}
         <MetricsChart 
-          userId={selectedUserId || undefined} 
+          userId={selectedUserId} 
           dateFrom={dateFrom} 
           dateTo={dateTo} 
         />
