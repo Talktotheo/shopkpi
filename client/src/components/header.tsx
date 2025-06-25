@@ -55,6 +55,16 @@ export function Header({ selectedUserId, onUserChange }: HeaderProps) {
                 Submit KPIs
               </Button>
             </Link>
+            <Link href="/team">
+              <Button
+                variant={location === "/team" ? "default" : "ghost"}
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Users className="h-4 w-4" />
+                Team
+              </Button>
+            </Link>
             {user?.role === 'admin' && (
               <Link href="/reports">
                 <Button

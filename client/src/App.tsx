@@ -9,6 +9,7 @@ import LandingPage from "@/pages/landing-page";
 import DashboardPage from "@/pages/dashboard-page";
 import SubmitKpiPage from "@/pages/submit-kpi-page";
 import ReportsPage from "@/pages/reports-page";
+import TeamManagementPage from "@/pages/team-management-page";
 import SubscribePage from "@/pages/subscribe-page";
 import AuthPage from "@/pages/auth-page";
 import NotFound from "@/pages/not-found";
@@ -21,6 +22,7 @@ function Router() {
       <ProtectedRoute path="/dashboard" component={DashboardPage} />
       <ProtectedRoute path="/submit" component={SubmitKpiPage} />
       <ProtectedRoute path="/reports" component={ReportsPage} />
+      <ProtectedRoute path="/team" component={TeamManagementPage} />
       <ProtectedRoute path="/subscribe" component={SubscribePage} />
       <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />

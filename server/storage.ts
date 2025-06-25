@@ -16,6 +16,14 @@ export interface IStorage {
   updateUserStripeInfo(userId: number, stripeCustomerId: string, stripeSubscriptionId: string, subscriptionStatus: string, subscriptionPlan: string): Promise<User>;
   updateUserSubscriptionStatus(userId: number, subscriptionStatus: string): Promise<User>;
   
+  // Team management
+  createTeam(ownerId: number, name: string, description?: string): Promise<Team>;
+  getTeamByUserId(userId: number): Promise<{ team: Team; members: User[] } | null>;
+  getTeamMembers(teamId: number): Promise<User[]>;
+  addUserToTeam(userId: number, teamId: number): Promise<User>;
+  removeUserFromTeam(userId: number): Promise<User>;
+  createTeamInvite(teamId: number, email: string, name: string, invitedBy: number): Promise<{ inviteToken: string }>;
+  
   createKpiReport(userId: number, report: InsertKpiReport): Promise<KpiReport>;
   getKpiReports(userId?: number, fromDate?: string, toDate?: string): Promise<KpiReportWithCalculated[]>;
   getKpiReportByUserAndDate(userId: number, reportDate: string): Promise<KpiReport | undefined>;
@@ -82,6 +90,113 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId))
       .returning();
     return user;
+  }
+
+  // Team management methods
+  async createTeam(ownerId: number, name: string, description?: string): Promise<Team> {
+    const [team] = await db
+      .insert(teams)
+      .values({ ownerId, name, description })
+      .returning();
+    
+    // Add owner to the team
+    await db
+      .update(users)
+      .set({ teamId: team.id })
+      .where(eq(users.id, ownerId));
+    
+    return team;
+  }
+
+  async getTeamByUserId(userId: number): Promise<{ team: Team; members: User[] } | null> {
+    const user = await this.getUser(userId);
+    if (!user?.teamId) return null;
+
+    const team = await db.query.teams.findFirst({
+      where: eq(teams.id, user.teamId),
+    });
+
+    if (!team) return null;
+
+    const members = await db.query.users.findMany({
+      where: eq(users.teamId, team.id),
+      columns: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        inviteStatus: true,
+        createdAt: true,
+      },
+    });
+
+    return { team, members };
+  }
+
+  async getTeamMembers(teamId: number): Promise<User[]> {
+    return await db.query.users.findMany({
+      where: eq(users.teamId, teamId),
+      columns: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        inviteStatus: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  async addUserToTeam(userId: number, teamId: number): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ teamId, inviteStatus: 'accepted' })
+      .where(eq(users.id, userId))
+      .returning();
+    return user;
+  }
+
+  async removeUserFromTeam(userId: number): Promise<User> {
+    const [user] = await db
+      .update(users)
+      .set({ teamId: null, inviteStatus: null })
+      .where(eq(users.id, userId))
+      .returning();
+    return user;
+  }
+
+  async createTeamInvite(teamId: number, email: string, name: string, invitedBy: number): Promise<{ inviteToken: string }> {
+    const inviteToken = randomBytes(32).toString('hex');
+    
+    // Check if user already exists
+    let existingUser = await this.getUserByEmail(email);
+    
+    if (existingUser) {
+      // Update existing user with team info
+      await db
+        .update(users)
+        .set({
+          teamId,
+          invitedBy,
+          inviteToken,
+          inviteStatus: 'pending'
+        })
+        .where(eq(users.id, existingUser.id));
+    } else {
+      // Create placeholder user for invite
+      await db.insert(users).values({
+        email,
+        name,
+        username: email.split('@')[0] + '_' + Math.random().toString(36).substr(2, 9),
+        password: '', // Will be set when they accept invite
+        teamId,
+        invitedBy,
+        inviteToken,
+        inviteStatus: 'pending'
+      });
+    }
+    
+    return { inviteToken };
   }
 
   async createKpiReport(userId: number, report: InsertKpiReport): Promise<KpiReport> {

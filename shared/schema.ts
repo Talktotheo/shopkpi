@@ -14,6 +14,18 @@ export const users = pgTable("users", {
   stripeSubscriptionId: text("stripe_subscription_id"),
   subscriptionStatus: text("subscription_status"),
   subscriptionPlan: text("subscription_plan"), // 'monthly' or 'yearly'
+  teamId: integer("team_id").references(() => teams.id),
+  invitedBy: integer("invited_by").references(() => users.id),
+  inviteToken: text("invite_token"),
+  inviteStatus: text("invite_status").default("pending"), // 'pending', 'accepted', 'expired'
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const teams = pgTable("teams", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  ownerId: integer("owner_id").notNull().references(() => users.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -30,8 +42,26 @@ export const kpiReports = pgTable("kpi_reports", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ many, one }) => ({
   kpiReports: many(kpiReports),
+  ownedTeams: many(teams, { relationName: "teamOwner" }),
+  team: one(teams, {
+    fields: [users.teamId],
+    references: [teams.id],
+  }),
+  invitedBy: one(users, {
+    fields: [users.invitedBy],
+    references: [users.id],
+  }),
+}));
+
+export const teamsRelations = relations(teams, ({ many, one }) => ({
+  members: many(users),
+  owner: one(users, {
+    fields: [teams.ownerId],
+    references: [users.id],
+    relationName: "teamOwner",
+  }),
 }));
 
 export const kpiReportsRelations = relations(kpiReports, ({ one }) => ({
@@ -71,6 +101,8 @@ export const insertKpiReportSchema = createInsertSchema(kpiReports).omit({
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type LoginUser = z.infer<typeof loginUserSchema>;
+export type Team = typeof teams.$inferSelect;
+export type InsertTeam = Omit<typeof teams.$inferInsert, 'id' | 'createdAt'>;
 export type KpiReport = typeof kpiReports.$inferSelect;
 export type InsertKpiReport = z.infer<typeof insertKpiReportSchema>;
 
