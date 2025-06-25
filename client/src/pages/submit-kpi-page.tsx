@@ -104,10 +104,10 @@ export default function SubmitKpiPage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-gray-900">
-              Submit Daily KPIs
+              Submit Job KPIs
             </CardTitle>
             <p className="text-sm text-gray-600">
-              Enter your production metrics for today
+              Enter production metrics for each job you complete
             </p>
           </CardHeader>
           <CardContent>
@@ -115,7 +115,7 @@ export default function SubmitKpiPage() {
               <Alert className="mb-6 border-green-200 bg-green-50">
                 <CheckCircle className="h-4 w-4 text-green-600" />
                 <AlertDescription className="text-green-800">
-                  KPI report submitted successfully!
+                  Job report submitted successfully! You can submit another job.
                 </AlertDescription>
               </Alert>
             )}
@@ -294,7 +294,7 @@ export default function SubmitKpiPage() {
                         Submitting...
                       </>
                     ) : (
-                      'Submit KPI Report'
+                      'Submit Job Report'
                     )}
                   </Button>
                   
