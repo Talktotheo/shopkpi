@@ -31,7 +31,7 @@ export function Header({ selectedUserId, onUserChange }: HeaderProps) {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">
             <PrinterIcon className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-bold text-gray-900">ShopPrint KPIs</h1>
+            <h1 className="text-xl font-bold text-gray-900">ShopKPI</h1>
           </div>
 
           <nav className="hidden md:flex space-x-1">

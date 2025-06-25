@@ -2,7 +2,7 @@
 
 ## Overview
 
-ShopPrint KPIs is a full-stack web application designed for tracking and analyzing Key Performance Indicators (KPIs) in a print shop environment. The application allows users to submit daily KPI reports and provides administrators with comprehensive dashboard analytics and user management capabilities.
+ShopKPI is a full-stack web application designed for tracking and analyzing Key Performance Indicators (KPIs) in a print shop environment. The application allows users to submit daily KPI reports and provides administrators with comprehensive dashboard analytics and user management capabilities.
 
 ## System Architecture
 
