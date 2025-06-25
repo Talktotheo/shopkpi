@@ -120,7 +120,7 @@ export default function SubscribePage() {
                   <CheckCircle className="h-5 w-5 text-green-500" />
                   <span>Full access to all features</span>
                 </div>
-                <Button onClick={() => window.location.href = '/'} className="w-full max-w-xs">
+                <Button onClick={() => window.location.href = '/dashboard'} className="w-full max-w-xs">
                   Go to Dashboard
                 </Button>
               </div>

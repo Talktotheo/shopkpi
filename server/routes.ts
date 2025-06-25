@@ -154,7 +154,7 @@ export function registerRoutes(app: Express): Server {
             quantity: 1,
           },
         ],
-        success_url: `${req.headers.origin}/?subscription=success`,
+        success_url: `${req.headers.origin}/dashboard?subscription=success`,
         cancel_url: `${req.headers.origin}/subscribe`,
         metadata: {
           userId: user.id.toString(),
