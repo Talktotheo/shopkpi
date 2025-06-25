@@ -39,7 +39,9 @@ export function Header({ selectedUserId, onUserChange }: HeaderProps) {
               <Button
                 variant={location === "/" ? "default" : "ghost"}
                 size="sm"
+                className="flex items-center gap-2"
               >
+                <BarChart3 className="h-4 w-4" />
                 Dashboard
               </Button>
             </Link>
@@ -47,10 +49,24 @@ export function Header({ selectedUserId, onUserChange }: HeaderProps) {
               <Button
                 variant={location === "/submit" ? "default" : "ghost"}
                 size="sm"
+                className="flex items-center gap-2"
               >
+                <PlusCircle className="h-4 w-4" />
                 Submit KPIs
               </Button>
             </Link>
+            {user?.role === 'admin' && (
+              <Link href="/reports">
+                <Button
+                  variant={location === "/reports" ? "default" : "ghost"}
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <FileSpreadsheet className="h-4 w-4" />
+                  Reports
+                </Button>
+              </Link>
+            )}
           </nav>
         </div>
 
