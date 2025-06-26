@@ -123,6 +123,7 @@ The application is configured for deployment on Replit with the following setup:
   - Enhanced mobile optimization with responsive design improvements
   - Added mobile-specific meta tags and touch optimizations
   - Updated hero text to "See the numbers, find the friction, print more profit."
+  - Added 7-day free trial to both subscription plans
 
 ## User Preferences
 

@@ -20,6 +20,7 @@ interface SubscriptionPlan {
   name: string;
   price: string;
   period: string;
+  trial?: string;
   features: string[];
   popular?: boolean;
 }

@@ -143,7 +143,7 @@ export function registerRoutes(app: Express): Server {
         yearly: process.env.STRIPE_YEARLY_PRICE_ID || "price_1234567890_yearly"
       };
 
-      // Create checkout session
+      // Create checkout session with 7-day trial
       const session = await stripe.checkout.sessions.create({
         customer: customer.id,
         mode: 'subscription',
@@ -154,6 +154,9 @@ export function registerRoutes(app: Express): Server {
             quantity: 1,
           },
         ],
+        subscription_data: {
+          trial_period_days: 7,
+        },
         success_url: `${req.headers.origin}/dashboard?subscription=success`,
         cancel_url: `${req.headers.origin}/subscribe`,
         metadata: {
