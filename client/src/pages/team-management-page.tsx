@@ -156,7 +156,7 @@ export default function TeamManagementPage() {
       <SubscriptionGuard>
         <div className="min-h-screen bg-gray-50">
           <Header selectedUserId="" onUserChange={() => {}} />
-          <div className="max-w-6xl mx-auto p-6">
+          <div className="max-w-6xl mx-auto p-4 md:p-6">
             <div className="text-center py-12">Loading...</div>
           </div>
         </div>

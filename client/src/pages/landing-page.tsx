@@ -83,11 +83,11 @@ export default function LandingPage() {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-green-500 flex-shrink-0 mt-1" />
-                  <p className="text-gray-700">{benefit}</p>
+                  <CheckCircle className="h-5 w-5 md:h-6 md:w-6 text-green-500 flex-shrink-0 mt-1" />
+                  <p className="text-sm md:text-base text-gray-700">{benefit}</p>
                 </div>
               ))}
             </div>
@@ -115,17 +115,17 @@ export default function LandingPage() {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-12 mb-16">
+            <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-16">
               {features.map((feature, index) => (
                 <Card key={index} className="border-none shadow-lg">
                   <CardHeader>
                     <div className="flex items-center space-x-4">
                       {feature.icon}
-                      <CardTitle className="text-xl">{feature.title}</CardTitle>
+                      <CardTitle className="text-lg md:text-xl">{feature.title}</CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600">{feature.description}</p>
+                    <p className="text-sm md:text-base text-gray-600">{feature.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -155,9 +155,9 @@ export default function LandingPage() {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
               {plans.map((plan, index) => (
-                <Card key={index} className={`relative ${plan.popular ? 'border-blue-500 shadow-lg scale-105' : ''}`}>
+                <Card key={index} className={`relative ${plan.popular ? 'border-blue-500 shadow-lg md:scale-105' : ''}`}>
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                       <Badge className="bg-blue-500 text-white px-4 py-1">
@@ -220,19 +220,19 @@ export default function LandingPage() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
       {/* Navigation */}
       <nav className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-2">
-              <Target className="h-8 w-8 text-blue-600" />
-              <span className="text-2xl font-bold text-gray-900">ShopKPI</span>
+              <Target className="h-6 w-6 md:h-8 md:w-8 text-blue-600" />
+              <span className="text-lg md:text-2xl font-bold text-gray-900">ShopKPI</span>
             </div>
             
             {/* Navigation Tabs */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden sm:flex items-center space-x-4 md:space-x-8">
               <button
                 onClick={() => setActiveTab("why")}
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-2 md:px-3 py-2 text-xs md:text-sm font-medium transition-colors touch-manipulation ${
                   activeTab === "why" 
                     ? "text-blue-600 border-b-2 border-blue-600" 
                     : "text-gray-600 hover:text-gray-900"
@@ -242,7 +242,7 @@ export default function LandingPage() {
               </button>
               <button
                 onClick={() => setActiveTab("what")}
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-2 md:px-3 py-2 text-xs md:text-sm font-medium transition-colors touch-manipulation ${
                   activeTab === "what" 
                     ? "text-blue-600 border-b-2 border-blue-600" 
                     : "text-gray-600 hover:text-gray-900"
@@ -252,7 +252,7 @@ export default function LandingPage() {
               </button>
               <button
                 onClick={() => setActiveTab("pricing")}
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-2 md:px-3 py-2 text-xs md:text-sm font-medium transition-colors touch-manipulation ${
                   activeTab === "pricing" 
                     ? "text-blue-600 border-b-2 border-blue-600" 
                     : "text-gray-600 hover:text-gray-900"
@@ -275,19 +275,19 @@ export default function LandingPage() {
       {/* Hero Section - Only show on first load */}
       {activeTab === "why" && (
         <div className="relative overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 py-20">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
               {/* Left Column - Text */}
-              <div>
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <div className="text-center lg:text-left">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                   Optimize your print shop with{" "}
                   <span className="text-blue-600">smart KPI tracking</span>
                 </h1>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
                   Track job performance, monitor quality metrics, and boost productivity 
                   with real-time analytics designed specifically for screen-printing businesses.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <Link href="/auth">
                     <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg">
                       Start Free Trial
