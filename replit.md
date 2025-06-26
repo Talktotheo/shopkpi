@@ -122,6 +122,7 @@ The application is configured for deployment on Replit with the following setup:
   - Created beautiful Hootsuite-inspired landing page design
   - Enhanced mobile optimization with responsive design improvements
   - Added mobile-specific meta tags and touch optimizations
+  - Updated hero text to "See the numbers, find the friction, print more profit."
 
 ## User Preferences
 

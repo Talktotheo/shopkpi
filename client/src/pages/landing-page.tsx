@@ -280,8 +280,7 @@ export default function LandingPage() {
               {/* Left Column - Text */}
               <div className="text-center lg:text-left">
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                  Optimize your print shop with{" "}
-                  <span className="text-blue-600">smart KPI tracking</span>
+                  <span className="text-blue-600">See the numbers, find the friction, print more profit.</span>
                 </h1>
                 <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
                   Track job performance, monitor quality metrics, and boost productivity 
