@@ -13,6 +13,8 @@ import TeamManagementPage from "@/pages/team-management-page";
 import SubscribePage from "@/pages/subscribe-page";
 import AuthPage from "@/pages/auth-page";
 import ContactPage from "@/pages/contact-page";
+import TermsPage from "@/pages/terms-page";
+import PrivacyPage from "@/pages/privacy-page";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -27,6 +29,8 @@ function Router() {
       <ProtectedRoute path="/subscribe" component={SubscribePage} />
       <Route path="/auth" component={AuthPage} />
       <Route path="/contact" component={ContactPage} />
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/privacy" component={PrivacyPage} />
       <Route component={NotFound} />
     </Switch>
   );

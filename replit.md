@@ -126,6 +126,9 @@ The application is configured for deployment on Replit with the following setup:
   - Added 7-day free trial to both subscription plans
   - Created professional contact page based on Hootsuite design
   - Updated contact page: removed live chat, phone support, and customer sections; changed email to hello@wheatonshirt.com; updated HQ address to West Chicago location
+  - Created comprehensive Terms of Service and Privacy Policy pages with proper legal content
+  - Added footer component with legal links for consistent access across app pages
+  - Updated landing page footer with working links to legal pages
 
 ## User Preferences
 
