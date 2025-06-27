@@ -374,8 +374,8 @@ export default function LandingPage() {
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-gray-400">
                 <li><button onClick={() => setActiveTab("why")} className="hover:text-white">About</button></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
-                <li><a href="#" className="hover:text-white">Support</a></li>
+                <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
+                <li><Link href="/contact" className="hover:text-white">Support</Link></li>
               </ul>
             </div>
             

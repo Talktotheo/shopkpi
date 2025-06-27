@@ -12,6 +12,7 @@ import ReportsPage from "@/pages/reports-page";
 import TeamManagementPage from "@/pages/team-management-page";
 import SubscribePage from "@/pages/subscribe-page";
 import AuthPage from "@/pages/auth-page";
+import ContactPage from "@/pages/contact-page";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -25,6 +26,7 @@ function Router() {
       <ProtectedRoute path="/team" component={TeamManagementPage} />
       <ProtectedRoute path="/subscribe" component={SubscribePage} />
       <Route path="/auth" component={AuthPage} />
+      <Route path="/contact" component={ContactPage} />
       <Route component={NotFound} />
     </Switch>
   );
