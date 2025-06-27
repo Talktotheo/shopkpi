@@ -232,28 +232,12 @@ export default function ContactPage() {
                   <Mail className="h-5 w-5 text-blue-600 mt-1" />
                   <div>
                     <h4 className="font-medium text-gray-900">Email Support</h4>
-                    <p className="text-sm text-gray-600">support@shopkpi.com</p>
+                    <p className="text-sm text-gray-600">hello@wheatonshirt.com</p>
                     <p className="text-xs text-gray-500 mt-1">Response within 24 hours</p>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <MessageSquare className="h-5 w-5 text-blue-600 mt-1" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">Live Chat</h4>
-                    <p className="text-sm text-gray-600">Available during business hours</p>
-                    <p className="text-xs text-gray-500 mt-1">Mon-Fri, 9AM-5PM EST</p>
-                  </div>
-                </div>
 
-                <div className="flex items-start space-x-3">
-                  <Phone className="h-5 w-5 text-blue-600 mt-1" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">Phone Support</h4>
-                    <p className="text-sm text-gray-600">For Pro subscribers</p>
-                    <p className="text-xs text-gray-500 mt-1">Priority phone support</p>
-                  </div>
-                </div>
               </CardContent>
             </Card>
 
@@ -278,18 +262,7 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            {/* Help Center Link */}
-            <Card className="bg-blue-50 border-blue-200">
-              <CardContent className="pt-6">
-                <h4 className="font-medium text-gray-900 mb-2">Already a customer?</h4>
-                <p className="text-sm text-gray-600 mb-4">
-                  Find quick answers in our help center or access your account.
-                </p>
-                <Button variant="outline" className="w-full">
-                  Visit Help Center
-                </Button>
-              </CardContent>
-            </Card>
+
           </div>
         </div>
       </div>
