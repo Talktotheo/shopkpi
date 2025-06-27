@@ -252,9 +252,8 @@ export default function ContactPage() {
                   <div>
                     <h4 className="font-medium text-gray-900">ShopKPI HQ</h4>
                     <p className="text-sm text-gray-600">
-                      123 Print Street<br />
-                      Business District<br />
-                      San Francisco, CA 94103<br />
+                      850 Meadowview Crossing, #15<br />
+                      West Chicago, IL 60185<br />
                       United States
                     </p>
                   </div>
