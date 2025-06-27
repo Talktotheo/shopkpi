@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { PrinterIcon, LogOut, BarChart3, PlusCircle, FileSpreadsheet, Users } from "lucide-react";
+import { PrinterIcon, LogOut, BarChart3, PlusCircle, FileSpreadsheet, Users, MessageSquare } from "lucide-react";
 import { User } from "@shared/schema";
 
 interface HeaderProps {
@@ -63,6 +63,16 @@ export function Header({ selectedUserId, onUserChange }: HeaderProps) {
               >
                 <Users className="h-4 w-4" />
                 Team
+              </Button>
+            </Link>
+            <Link href="/contact">
+              <Button
+                variant={location === "/contact" ? "default" : "ghost"}
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <MessageSquare className="h-4 w-4" />
+                Contact
               </Button>
             </Link>
             {user?.role === 'admin' && (
