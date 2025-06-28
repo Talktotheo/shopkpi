@@ -33,8 +33,9 @@ export function DataEntriesScreenshot() {
           <CardContent>
             <div className="overflow-hidden">
               {/* Table Header */}
-              <div className="grid grid-cols-7 gap-4 py-3 px-4 bg-gray-50 border-b font-semibold text-sm text-gray-700">
+              <div className="grid grid-cols-8 gap-4 py-3 px-4 bg-gray-50 border-b font-semibold text-sm text-gray-700">
                 <div>Date</div>
+                <div>Employee</div>
                 <div>Job Name</div>
                 <div>Job #</div>
                 <div>Prints</div>
@@ -45,8 +46,9 @@ export function DataEntriesScreenshot() {
 
               {/* Table Rows */}
               <div className="divide-y divide-gray-200">
-                <div className="grid grid-cols-7 gap-4 py-3 px-4 hover:bg-gray-50">
+                <div className="grid grid-cols-8 gap-4 py-3 px-4 hover:bg-gray-50">
                   <div className="text-sm text-gray-900">Dec 28</div>
+                  <div className="text-sm font-medium text-blue-600">Steve</div>
                   <div className="text-sm font-medium text-gray-900">Holiday Tees</div>
                   <div className="text-sm text-gray-600">#2024-0287</div>
                   <div className="text-sm text-green-600 font-semibold">524</div>
@@ -57,8 +59,9 @@ export function DataEntriesScreenshot() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-7 gap-4 py-3 px-4 hover:bg-gray-50">
+                <div className="grid grid-cols-8 gap-4 py-3 px-4 hover:bg-gray-50">
                   <div className="text-sm text-gray-900">Dec 28</div>
+                  <div className="text-sm font-medium text-blue-600">Juan</div>
                   <div className="text-sm font-medium text-gray-900">Corporate Hoodies</div>
                   <div className="text-sm text-gray-600">#2024-0286</div>
                   <div className="text-sm text-green-600 font-semibold">342</div>
@@ -69,8 +72,9 @@ export function DataEntriesScreenshot() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-7 gap-4 py-3 px-4 hover:bg-gray-50">
+                <div className="grid grid-cols-8 gap-4 py-3 px-4 hover:bg-gray-50">
                   <div className="text-sm text-gray-900">Dec 27</div>
+                  <div className="text-sm font-medium text-blue-600">Maddie</div>
                   <div className="text-sm font-medium text-gray-900">School Spirit Shirts</div>
                   <div className="text-sm text-gray-600">#2024-0285</div>
                   <div className="text-sm text-green-600 font-semibold">718</div>
@@ -81,8 +85,9 @@ export function DataEntriesScreenshot() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-7 gap-4 py-3 px-4 hover:bg-gray-50">
+                <div className="grid grid-cols-8 gap-4 py-3 px-4 hover:bg-gray-50">
                   <div className="text-sm text-gray-900">Dec 27</div>
+                  <div className="text-sm font-medium text-blue-600">Antonio</div>
                   <div className="text-sm font-medium text-gray-900">Band Merch Run</div>
                   <div className="text-sm text-gray-600">#2024-0284</div>
                   <div className="text-sm text-green-600 font-semibold">235</div>
@@ -93,8 +98,9 @@ export function DataEntriesScreenshot() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-7 gap-4 py-3 px-4 hover:bg-gray-50">
+                <div className="grid grid-cols-8 gap-4 py-3 px-4 hover:bg-gray-50">
                   <div className="text-sm text-gray-900">Dec 26</div>
+                  <div className="text-sm font-medium text-blue-600">Steve</div>
                   <div className="text-sm font-medium text-gray-900">Custom Logo Polos</div>
                   <div className="text-sm text-gray-600">#2024-0283</div>
                   <div className="text-sm text-green-600 font-semibold">156</div>
@@ -108,8 +114,9 @@ export function DataEntriesScreenshot() {
 
               {/* Summary Footer */}
               <div className="bg-gray-50 px-4 py-3 border-t">
-                <div className="grid grid-cols-7 gap-4 text-sm font-semibold text-gray-700">
+                <div className="grid grid-cols-8 gap-4 text-sm font-semibold text-gray-700">
                   <div>Totals:</div>
+                  <div>4 Team Members</div>
                   <div>5 Jobs</div>
                   <div>-</div>
                   <div className="text-green-600">1,975</div>

@@ -130,6 +130,7 @@ The application is configured for deployment on Replit with the following setup:
   - Added footer component with legal links for consistent access across app pages
   - Updated landing page footer with working links to legal pages
   - Added dashboard and job tracking screenshots to landing page showcasing app functionality
+  - Updated job reports screenshot to include Employee column with team members (Steve, Juan, Maddie, Antonio)
 
 ## User Preferences
 
