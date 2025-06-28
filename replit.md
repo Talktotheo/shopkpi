@@ -143,6 +143,7 @@ The application is configured for deployment on Replit with the following setup:
   - Fixed "Change Plan" button in signup page to redirect back to pricing tab on landing page
   - Fixed "Choose a plan to get started" link in login page to properly redirect to pricing section
   - Added confirm password field with validation to signup form ensuring passwords match
+  - Fixed "Start Free Trial" buttons on landing page to navigate directly to pricing section
 
 ## User Preferences
 

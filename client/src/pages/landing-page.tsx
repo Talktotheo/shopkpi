@@ -116,11 +116,12 @@ export default function LandingPage() {
             </div>
             
             <div className="text-center">
-              <Link href="/auth">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg">
-                  Start Your Free Trial
-                </Button>
-              </Link>
+              <button 
+                onClick={() => setActiveTab("pricing")}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg rounded-md font-medium transition-colors"
+              >
+                Start Your Free Trial
+              </button>
             </div>
           </div>
         );
@@ -335,11 +336,12 @@ export default function LandingPage() {
                   with real-time analytics designed specifically for screen-printing businesses.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Link href="/auth">
-                    <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg">
-                      Start Free Trial
-                    </Button>
-                  </Link>
+                  <button 
+                    onClick={() => setActiveTab("pricing")}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg rounded-md font-medium transition-colors"
+                  >
+                    Start Free Trial
+                  </button>
                   <Button 
                     size="lg" 
                     variant="outline" 
