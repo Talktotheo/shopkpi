@@ -131,6 +131,7 @@ The application is configured for deployment on Replit with the following setup:
   - Updated landing page footer with working links to legal pages
   - Added dashboard and job tracking screenshots to landing page showcasing app functionality
   - Updated job reports screenshot to include Employee column with team members (Steve, Juan, Maddie, Antonio)
+  - Updated both dashboard and reports screenshots to match actual app interface precisely (shadcn/ui components, styling, layout)
 
 ## User Preferences
 
