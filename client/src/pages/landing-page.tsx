@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Link } from "wouter";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
+import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,15 @@ import { DashboardScreenshot } from "@/components/dashboard-screenshot";
 import { DataEntriesScreenshot } from "@/components/data-entries-screenshot";
 
 export default function LandingPage() {
+  const { user, isLoading } = useAuth();
+  const [, setLocation] = useLocation();
+
+  // Redirect logged-in users to dashboard
+  useEffect(() => {
+    if (!isLoading && user) {
+      setLocation("/dashboard");
+    }
+  }, [user, isLoading, setLocation]);
   const [activeTab, setActiveTab] = useState("why");
 
   const features = [
