@@ -107,7 +107,7 @@ export default function LoginPage() {
               <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600">
                   Don't have an account?{" "}
-                  <Link href="/landing#pricing" className="text-blue-600 hover:text-blue-800 font-medium">
+                  <Link href="/?tab=pricing" className="text-blue-600 hover:text-blue-800 font-medium">
                     Choose a plan to get started
                   </Link>
                 </p>
