@@ -132,6 +132,7 @@ The application is configured for deployment on Replit with the following setup:
   - Added dashboard and job tracking screenshots to landing page showcasing app functionality
   - Updated job reports screenshot to include Employee column with team members (Steve, Juan, Maddie, Antonio)
   - Updated both dashboard and reports screenshots to match actual app interface precisely (shadcn/ui components, styling, layout)
+  - Changed monthly pricing from $5.99 to $4.99 and updated yearly savings calculation to $10.88
 
 ## User Preferences
 

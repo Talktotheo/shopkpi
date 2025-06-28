@@ -45,7 +45,7 @@ export default function LandingPage() {
   const plans = [
     {
       name: "Pro Monthly",
-      price: "$5.99",
+      price: "$4.99",
       period: "per month",
       features: [
         "Unlimited job tracking",
@@ -62,7 +62,7 @@ export default function LandingPage() {
       popular: true,
       features: [
         "Everything in Monthly",
-        "Save $22.88 annually",
+        "Save $10.88 annually",
         "Priority support",
         "Advanced analytics",
         "Custom reporting"

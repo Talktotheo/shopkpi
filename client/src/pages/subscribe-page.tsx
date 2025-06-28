@@ -29,7 +29,7 @@ const plans: SubscriptionPlan[] = [
   {
     id: 'monthly',
     name: 'Monthly',
-    price: '$5.99',
+    price: '$4.99',
     period: 'per month',
     features: [
       'Unlimited job tracking',
@@ -50,7 +50,7 @@ const plans: SubscriptionPlan[] = [
       'Performance analytics',
       'CSV export reports',
       'Priority email support',
-      'Save $22.88 annually'
+      'Save $10.88 annually'
     ],
     popular: true
   }
