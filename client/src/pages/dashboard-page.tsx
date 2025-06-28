@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/use-auth";
 import { Header } from "@/components/header";
-import { SubscriptionGuard } from "@/lib/subscription-guard";
+
 import { KpiStatsCards } from "@/components/kpi-stats-cards";
 import { CalculatedMetrics } from "@/components/calculated-metrics";
 import { MetricsChart } from "@/components/metrics-chart";
@@ -71,12 +71,11 @@ export default function DashboardPage() {
   }
 
   return (
-    <SubscriptionGuard>
-      <div className="min-h-screen bg-gray-50">
-        <Header 
-          selectedUserId={selectedUserId}
-          onUserChange={setSelectedUserId}
-        />
+    <div className="min-h-screen bg-gray-50">
+      <Header 
+        selectedUserId={selectedUserId}
+        onUserChange={setSelectedUserId}
+      />
         
         <div className="max-w-7xl mx-auto p-4 space-y-6">
         {/* Date Range Picker */}
@@ -131,9 +130,8 @@ export default function DashboardPage() {
             <span className="text-xs mt-1">Dashboard</span>
           </div>
         </div>
-        </div>
-        <Footer />
       </div>
-    </SubscriptionGuard>
+      <Footer />
+    </div>
   );
 }
