@@ -232,7 +232,7 @@ export default function SignupPage() {
                 </div>
 
                 <div className="text-center">
-                  <Link href="/landing#pricing">
+                  <Link href="/?tab=pricing">
                     <Button variant="outline" size="sm">
                       Change Plan
                     </Button>

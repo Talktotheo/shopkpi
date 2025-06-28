@@ -20,6 +20,15 @@ export default function LandingPage() {
   }, [user, isLoading, setLocation]);
   const [activeTab, setActiveTab] = useState("why");
 
+  // Check for tab parameter in URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam && ['why', 'features', 'pricing'].includes(tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, []);
+
   const features = [
     {
       icon: <BarChart3 className="h-8 w-8 text-blue-600" />,

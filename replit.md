@@ -140,6 +140,7 @@ The application is configured for deployment on Replit with the following setup:
   - Removed confusing dual auth page in favor of clear plan → signup → login journey
   - Fixed root path routing to show landing page instead of subscription paywall
   - Added automatic dashboard redirect for logged-in users visiting landing page
+  - Fixed "Change Plan" button in signup page to redirect back to pricing tab on landing page
 
 ## User Preferences
 
