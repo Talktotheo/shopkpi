@@ -18,6 +18,10 @@ const signupFormSchema = z.object({
   name: z.string().min(1, "Full name is required"),
   email: z.string().email("Valid email is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  confirmPassword: z.string().min(6, "Please confirm your password"),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 });
 
 type RegisterFormData = z.infer<typeof signupFormSchema>;
@@ -36,6 +40,7 @@ export default function SignupPage() {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
       name: "",
     },
   });
@@ -47,8 +52,9 @@ export default function SignupPage() {
   }
 
   const onSubmit = (data: RegisterFormData) => {
+    const { confirmPassword, ...submitData } = data;
     registerMutation.mutate({
-      ...data,
+      ...submitData,
       role: "user" as const
     });
   };
@@ -159,6 +165,20 @@ export default function SignupPage() {
                           <FormLabel>Password</FormLabel>
                           <FormControl>
                             <Input type="password" placeholder="Create a strong password" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Confirm Password</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="Confirm your password" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
