@@ -133,6 +133,11 @@ The application is configured for deployment on Replit with the following setup:
   - Updated job reports screenshot to include Employee column with team members (Steve, Juan, Maddie, Antonio)
   - Updated both dashboard and reports screenshots to match actual app interface precisely (shadcn/ui components, styling, layout)
   - Changed monthly pricing from $5.99 to $4.99 and updated yearly savings calculation to $10.88
+  - Cleaned up registration process with plan-first signup flow
+  - Created dedicated signup page with plan selection integration
+  - Added separate login page with simplified authentication
+  - Updated landing page navigation to direct users to new signup flow
+  - Removed confusing dual auth page in favor of clear plan → signup → login journey
 
 ## User Preferences
 

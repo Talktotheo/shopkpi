@@ -44,6 +44,7 @@ export default function LandingPage() {
 
   const plans = [
     {
+      id: "monthly",
       name: "Pro Monthly",
       price: "$4.99",
       period: "per month",
@@ -56,6 +57,7 @@ export default function LandingPage() {
       ]
     },
     {
+      id: "yearly",
       name: "Pro Yearly",
       price: "$49",
       period: "per year",
@@ -210,7 +212,7 @@ export default function LandingPage() {
                       ))}
                     </ul>
                     
-                    <Link href="/auth">
+                    <Link href={`/signup?plan=${plan.id}`}>
                       <Button 
                         className={`w-full ${plan.popular ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
                         size="lg"
@@ -288,7 +290,7 @@ export default function LandingPage() {
             </div>
             
             {/* Login Button */}
-            <Link href="/auth">
+            <Link href="/login">
               <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
                 Login
               </Button>
