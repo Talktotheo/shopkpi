@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, BarChart3, TrendingUp, Users, Zap, Target, PieChart, FileSpreadsheet } from "lucide-react";
+import { DashboardScreenshot } from "@/components/dashboard-screenshot";
+import { DataEntriesScreenshot } from "@/components/data-entries-screenshot";
 
 export default function LandingPage() {
   const [activeTab, setActiveTab] = useState("why");
@@ -129,6 +131,29 @@ export default function LandingPage() {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+            
+            {/* Dashboard Screenshots Section */}
+            <div className="space-y-16 mb-16">
+              <div className="text-center">
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                  Real-Time Dashboard Analytics
+                </h3>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                  Get instant insights into your print shop performance with comprehensive KPI tracking and visual analytics.
+                </p>
+                <DashboardScreenshot />
+              </div>
+              
+              <div className="text-center">
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                  Detailed Job Tracking
+                </h3>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                  Track every job with precision - from prints completed to order accuracy, all in one organized view.
+                </p>
+                <DataEntriesScreenshot />
+              </div>
             </div>
             
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 text-center">
